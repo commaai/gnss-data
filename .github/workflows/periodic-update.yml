@@ -1,10 +1,10 @@
-name: nightly-update
+name: periodic-update
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 0/12 * * *'
 jobs:
-  nightly-update:
+  periodic-update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,5 +17,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email ""
           git add .
-          git commit -m "nightly update"
+          git commit -m "periodic update"
           git push
