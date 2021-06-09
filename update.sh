@@ -2,14 +2,22 @@
 
 cd "$(dirname "$0")"
 
-# /gnss/data/daily/
-lftp -d -u $FTP_CREDS -e 'set ftp:ssl-force true' -e 'mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/data/daily/201[8-9]/ --directory=/gnss/data/daily/20[2-9][0-9]/ --include-glob=[0-9][0-9][0-9]/[0-9][0-9][ng]/brdc[0-9][0-9][0-9]0.[0-9][0-9][ng].Z --include-glob=[0-9][0-9][0-9]/[0-9][0-9][ng]/brdc[0-9][0-9][0-9]0.[0-9][0-9][ng].gz --target-directory=./gnss/data/daily/;exit' gdc.cddis.eosdis.nasa.gov
-# /gnss/products/
-lftp -d -u $FTP_CREDS -e 'set ftp:ssl-force true' -e 'mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/198[2-9]/ --directory=/gnss/products/199[0-9]/ --directory=/gnss/products/[2-9][0-9][0-9][0-9]/ --include-glob=ig[sru][0-9][0-9][0-9][0-9][0-9].sp3.Z --target-directory=./gnss/products/;exit' gdc.cddis.eosdis.nasa.gov
-# /gnss/products/ionex/
-lftp -d -u $FTP_CREDS -e 'set ftp:ssl-force true' -e 'mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/ionex/201[8-9]/ --directory=/gnss/products/ionex/20[2-9][0-9]/ --include-glob=[0-9][0-9][0-9]/codg[0-9][0-9][0-9]0.[0-9][0-9]i.Z -I --include-glob=[0-9][0-9][0-9]/c[12]pg[0-9][0-9][0-9]0.[0-9][0-9]i.Z --target-directory=./gnss/products/ionex/;exit' gdc.cddis.eosdis.nasa.gov
-# /gnss/products/bias/
-lftp -d -u $FTP_CREDS -e 'set ftp:ssl-force true' -e 'mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/bias/201[8-9]/ --directory=/gnss/products/bias/20[2-9][0-9]/ --include-glob=CAS0MGXRAP_[0-9][0-9][0-9][0-9][0-9][0-9][0-9]0000_01D_01D_DCB.BSX.gz --target-directory=./gnss/products/bias/;exit' gdc.cddis.eosdis.nasa.gov
-# /glonass/products/
-lftp -d -u $FTP_CREDS -e 'set ftp:ssl-force true' -e 'mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/glonass/products/198[2-9]/ --directory=/glonass/products/199[0-9]/ --directory=/glonass/products/[2-9][0-9][0-9][0-9]/ --include-glob=ig[l][0-9][0-9][0-9][0-9][0-9].sp3.Z --target-directory=./glonass/products/;exit' gdc.cddis.eosdis.nasa.gov
+YY="[0-9][0-9]"
+DOY="[0-9][0-9][0-9]"
+DOW="[0-9]"
+GPS_WEEK="[0-9][0-9][0-9][0-9]"
 
+echo "STARTING: /gnss/data/daily/"
+lftp -d -u anonymous,admin@comma.ai -e "set ftp:ssl-force true" -e "mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/data/daily/202[1-9]/ --directory=/gnss/data/daily/20[3-9][0-9]/ --include-glob=${DOY}/${YY}[ng]/brdc${DOY}0.${YY}[ng].Z --include-glob=${DOY}/${YY}[ng]/brdc${DOY}0.${YY}[ng].gz --target-directory=./gnss/data/daily/;exit" gdc.cddis.eosdis.nasa.gov
+
+echo "STARTING: /gnss/products/"
+lftp -d -u anonymous,admin@comma.ai -e "set ftp:ssl-force true" -e "mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/21[4-9][0-9]/ --directory=/gnss/products/2[2-9][0-9][0-9]/ --directory=/gnss/products/[3-9][0-9][0-9][0-9]/ --include-glob=ig[sru]${GPS_WEEK}${DOW}.sp3.Z --target-directory=./gnss/products/;exit" gdc.cddis.eosdis.nasa.gov
+
+echo "STARTING: /gnss/products/ionex/"
+lftp -d -u anonymous,admin@comma.ai -e "set ftp:ssl-force true" -e "mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/ionex/202[1-9]/ --directory=/gnss/products/ionex/20[3-9][0-9]/ --include-glob=${DOY}/codg${DOY}0.${YY}i.Z -I --include-glob=${DOY}/c[12]pg${DOY}0.${YY}i.Z --target-directory=./gnss/products/ionex/;exit" gdc.cddis.eosdis.nasa.gov
+
+echo "STARTING: /gnss/products/bias/"
+lftp -d -u anonymous,admin@comma.ai -e "set ftp:ssl-force true" -e "mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/gnss/products/bias/202[1-9]/ --directory=/gnss/products/bias/20[3-9][0-9]/ --include-glob=*_DCB.BSX.gz --target-directory=./gnss/products/bias/;exit" gdc.cddis.eosdis.nasa.gov
+
+echo "STARTING: /glonass/products/"
+lftp -d -u anonymous,admin@comma.ai -e "set ftp:ssl-force true" -e "mirror --only-missing --no-empty-dirs --no-perms --no-umask --parallel=10 --directory=/glonass/products/21[4-9][0-9]/ --directory=/glonass/products/2[2-9][0-9][0-9]/ --directory=/glonass/products/[3-9][0-9][0-9][0-9]/ --include-glob=ig[l]${GPS_WEEK}${DOW}.sp3.Z --target-directory=./glonass/products/;exit" gdc.cddis.eosdis.nasa.gov
