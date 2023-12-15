@@ -47,6 +47,7 @@ done
 END_GPS_WEEK=$(( ( $(date -u +%s) - $(date -u -d'1980-01-06 00:00:00' +%s) ) / 60 / 60 / 24 / 7 ))
 START_GPS_WEEK=$(( ${END_GPS_WEEK} - 52 ))
 for CURR_GPS_WEEK in $(seq ${START_GPS_WEEK} ${END_GPS_WEEK}); do
+  echo "STARTING GPS WEEK: ${CURR_GPS_WEEK}"
   #        target dir             source dirs (space separated array)   include globs (space separated array)
   sync_dir "./gnss/products/"     "/gnss/products/${CURR_GPS_WEEK}/"    "ig[sr]${GPS_WEEK}${DOW}.sp3.Z igu${GPS_WEEK}${DOW}_${HH}.sp3.Z"
   sync_dir "./glonass/products/"  "/glonass/products/${CURR_GPS_WEEK}/" "ig[l]${GPS_WEEK}${DOW}.sp3.Z"
