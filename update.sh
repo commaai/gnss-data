@@ -41,7 +41,7 @@ for CURR_YEAR in $(seq ${START_YEAR} ${END_YEAR}); do
   #        target dir               source dirs (space separated array)   include globs (space separated array)
   sync_dir "./gnss/data/daily/"     "/gnss/data/daily/${CURR_YEAR}/"      "${DOY}/${YY}[ng]/brdc${DOY}0.${YY}[ng].Z ${DOY}/${YY}[ng]/brdc${DOY}0.${YY}[ng].gz"
   sync_dir "./gnss/products/ionex/" "/gnss/products/ionex/${CURR_YEAR}/"  "${DOY}/COD0OPSFIN_${YYYY}${DOY}0000_01D_01H_GIM.INX.gz ${DOY}/COD0OPSRAP_${YYYY}${DOY}0000_01D_01H_GIM.INX.gz"
-  sync_dir "./gnss/products/bias/"  "/gnss/products/bias/${CURR_YEAR}/"   "*_DCB.BSX.gz"
+  sync_dir "./gnss/products/bias/"  "/gnss/products/bias/${CURR_YEAR}/"   "*_DCB.BSX.gz *_DCB.BIA.gz"
 done
 
 END_GPS_WEEK=$(( ( $(date -u +%s) - $(date -u -d'1980-01-06 00:00:00' +%s) ) / 60 / 60 / 24 / 7 ))
