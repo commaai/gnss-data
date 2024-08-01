@@ -32,6 +32,7 @@ YY="[0-9][0-9]"
 YYYY="[0-9][0-9][0-9][0-9]"
 DOY="[0-9][0-9][0-9]"
 DOW="[0-9]"
+V="[0-9]"
 GPS_WEEK="[0-9][0-9][0-9][0-9]"
 
 END_YEAR=$(date -u +%Y)
@@ -49,6 +50,6 @@ START_GPS_WEEK=$(( ${END_GPS_WEEK} - 52 ))
 for CURR_GPS_WEEK in $(seq ${START_GPS_WEEK} ${END_GPS_WEEK}); do
   echo "STARTING GPS WEEK: ${CURR_GPS_WEEK}"
   #        target dir             source dirs (space separated array)   include globs (space separated array)
-  sync_dir "./gnss/products/"     "/gnss/products/${CURR_GPS_WEEK}/"    "ig[sr]${GPS_WEEK}${DOW}.sp3.Z igu${GPS_WEEK}${DOW}_${HH}.sp3.Z"
+  sync_dir "./gnss/products/"     "/gnss/products/${CURR_GPS_WEEK}/"    "IGS${V}OPSFIN_${YYYY}${DOY}0000_01D_15M_ORB.SP3.gz IGS${V}OPSRAP_${YYYY}${DOY}0000_01D_15M_ORB.SP3.gz GS${V}OPSULT_${YYYY}${DOY}0000_02D_15M_ORB.SP3.gz"
   sync_dir "./glonass/products/"  "/glonass/products/${CURR_GPS_WEEK}/" "ig[l]${GPS_WEEK}${DOW}.sp3.Z"
 done
