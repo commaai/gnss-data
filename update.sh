@@ -46,7 +46,7 @@ for CURR_YEAR in $(seq ${START_YEAR} ${END_YEAR}); do
 done
 
 END_GPS_WEEK=$(( ( $(date -u +%s) - $(date -u -d'1980-01-06 00:00:00' +%s) ) / 60 / 60 / 24 / 7 ))
-START_GPS_WEEK=$(( ${END_GPS_WEEK} - 52 ))
+START_GPS_WEEK=$(( ${END_GPS_WEEK} - 4 ))
 for CURR_GPS_WEEK in $(seq ${START_GPS_WEEK} ${END_GPS_WEEK}); do
   echo "STARTING GPS WEEK: ${CURR_GPS_WEEK}"
   #        target dir             source dirs (space separated array)   include globs (space separated array)
